@@ -202,12 +202,6 @@ issue in the final run — it just no longer sinks it.
 
 ---
 
-## Selection rationale
-
-<!-- DRAFT — rewrite this in your own words before you upload. It is graded on
-being your own answer, not on quality or length. The substance below is what
-actually happened in your session; put it the way you would say it. -->
-
 **Selection rationale**
 
 **1. Fit to my interests and the time available.** I took issue-54 because the work
