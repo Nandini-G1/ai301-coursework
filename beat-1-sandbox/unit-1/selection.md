@@ -233,9 +233,7 @@ essentially "add two directory names to an exclusion list," where the title stat
 the answer, while issue-54 is a regex that looks correct and silently matches
 nothing. Chasing a wrong answer that does not raise an exception is harder and more
 useful to learn than chasing an obvious omission, and understanding why `^` fails
-against indented text is a bug class I will meet again. Fit, in my rubric, only
-orders accepted issues — so this was a judgment the tool handed back to me by
-design.
+against indented text is a bug class I will meet again. 
 
 **3. Anticipated difficulty in claiming it.** Low on paper: zero comments, no
 assignee, no linked PR at the time I ran the skill, so nobody is on it yet. The real
@@ -244,10 +242,7 @@ failed repo-wide — across every issue sampled, no Owner, Member, or Collaborat
 replied anywhere in that repository. So I should expect to post the claim comment
 and start work without acknowledgement, rather than waiting for a green light that
 is not coming. The second risk is speed: a TF claimed issue-62 the day before I
-looked, so these issues do move. And because the house rule says a shared issue
-blocks nobody, a classmate may well claim issue-54 after me — which costs me
-nothing, since credit attaches to the pull request I open.
-
+looked, so these issues do move. 
 ---
 
 Related paths: `eval-run.txt` in this directory; your skill's files in
