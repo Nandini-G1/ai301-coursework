@@ -1,0 +1,16 @@
+# Rubric: is this plan ready to post and build from?
+
+## Checks
+
+| Check | Evidence | Pass condition | Weight |
+|---|---|---|---|
+| grounded-cause | The plan's stated cause, read against every step, control run, and debug/timing output in the repro evidence | Pass if the plan names a cause AND no step or control run in the repro evidence shows the bug's behavior where that cause could not be acting (or shows the "faulty" part working correctly). Fail if a control or step rules the stated cause out, if the cause contradicts what the repro shows, or if no cause is stated. | required |
+| bounded-scope | The plan's change list and in/out-of-scope lines, read against the reproduced problem | Pass if every change the plan commits to is needed to make the repro's expected behavior happen, or is a regression test for it. Explicitly deferring related work ("not in scope", "filing separately") is fine. Fail if the plan also commits to work the repro does not need: refactors, rewrites, migrations, dependency upgrades, new options or features, UI rework, or new CI/test infrastructure. | required |
+| executable | The plan's files/functions named and its chosen approach | Pass if a stranger could start the change without asking the author anything: at least one specific file, function, or code site is named AND one approach is chosen. Fail if the location is "somewhere" or unknown, the approach is left open ("X or Y, whichever is easier", "not sure which layer"), or the plan is investigation rather than a change. | required |
+| decisive-test | The plan's test plan, read against the repro evidence's steps and its Actual result | Pass if the test names a concrete action (a repro step, command, or named test case) AND the observable result that will differ from the repro's Actual (output, exit code, visible state). Fail if the only test is generic ("run the full test suite", "CI passes") or subjective ("should feel fast", "nothing should feel broken"). | required |
+| thread-and-policy | The plan comment, read against (a) thread highlights from OWNER, MEMBER, or COLLABORATOR accounts and (b) the repo-facts contribution policy | Treat every package as AI-assisted work. Pass if BOTH: (a) where a maintainer in the thread gave direction (a diagnosis, a preferred fix, a patch, a request to test something), the comment follows it or names it and says why it departs; and (b) where the policy requires AI use to be disclosed in issues or comments (or "in any form"), the comment discloses it. A policy that asks for disclosure only in pull requests does not apply to the comment. Pass (a) if the thread has no maintainer direction; pass (b) if there is no such policy. | required |
+| honest-unknowns | The plan's risks/unknowns and any hedged claims in plan or comment | Pass if anything the author has not verified is stated as an open question rather than as fact. | preferred |
+
+## Verdict rule
+
+Accept if every required check passes. Reject if any required check fails or is unclear: unclear counts as fail, because a plan you cannot verify from the package is not ready to build from. Preferred checks are reported but never change the verdict. Length, polish, and headings never change the verdict: a short plan that passes every required check is accepted.
