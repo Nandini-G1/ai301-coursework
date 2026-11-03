@@ -271,6 +271,3 @@ Start earlier. I started most the work late, which left less room to pick an iss
 - MFC's toolchain lint script (toolchain/bootstrap/lint.sh), which showed me what `./mfc.sh lint` actually runs, so I could write the checks for my ship manifest.
 - The CI log for the failed Build & Verify run on my PR, which showed the failure was an external link, not my change.
 - Claude (AI assistant), which helped me plan, check the renames, and draft the test-case listing script; I ran and checked everything myself.
-
-- [Link to documentation that helped]
-- [Discussion, issue, or post that helped]
