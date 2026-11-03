@@ -55,7 +55,7 @@ happened; these entries are the toolkit's own timeline.
 All four entries are graded. Keep every heading below, and fill each
 one in the week it belongs to.
 
-**Unit 5: [one line on the tool work]**
+**Unit 5: **
 
 I turned my unit-1 issue-select skill into a scout with two gh search issues queries from my fit profile (Python issues labeled good first issue plus bug or tests) and six ranking rules. Running my bug query by hand first showed a few repos had bulk-filed many issues at once, which would have filled the whole top 5, so I added a one-result-per-repo rule before my first scan. The scan accepted all 5 picks, but repo-in-use passed brand-new single-person repos (one was created a week before), so I added a rule that fails repos less than 90 days old. Grading my site picks showed a second gap: unassigned only checks open PRs, so it accepted MFC#1509 even though merged PRs had already fixed both parts; I logged a patch for that check, and I now open an issue’s Development sidebar before claiming anything.
 
