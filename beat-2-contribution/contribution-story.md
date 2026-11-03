@@ -1,4 +1,4 @@
-# Contribution: [Issue Title]
+# Contribution: rename camelCase/Hungarian leftovers in test toolchain
 
 Path: `beat-2-contribution/contribution-story.md`
 
@@ -7,11 +7,10 @@ the repository is not read. **Keep every section header below under its exact na
 format criteria grade exactly that. Your course repo link is the whole submission: no tool
 files and no evidence uploads are part of Assignment 5.
 
-**Contribution Number:** [1]
-**Student:** [Student name]
-**GitHub Username:** [your GitHub username, exactly as it appears on your profile - no @, no
-profile URL. Your comments upstream are identified by this name.]
-**Issue:** [GitHub issue link]
+**Contribution Number:** 1
+**Student:** Vishwanandini Reddy Gajjala
+**GitHub Username:** Nandini-G1
+**Issue:** https://github.com/MFlowCode/MFC/issues/1506
 **Pull Request:** [GitHub PR link, once opened]
 
 One repository, built across units 5 to 8, telling the whole story of your real
@@ -79,24 +78,15 @@ drafted, what you did with the draft.]
 
 ## Why I Chose This Issue
 
-[1-2 paragraphs in your own words: how you searched, what your scan
-surfaced, what your scout's verdict said, why this issue fits your
-profile, and what you hope to learn. If your scout's verdict on it
-was reject and you chose it anyway, say so here and say why; choosing
-against your own tool silently is what loses points. Close with an
-honest read of the tool itself: where the scout fell short on a real
-wild search and what you changed or would change, or what convinced
-you it held up. **Record the link to your claim comment in this section too.**
-Not claimed yet? Write `claim pending` and today's date where the link goes,
-and add the link the moment your claim lands.]
+I searched two ways. My scout ran two gh search issues queries from my fit profile (Python issues labeled good first issue plus bug or tests). Its first scan found 198 issues and accepted all five it graded, but four came from repos only weeks old and one was entirely React. My real candidates came from the AI301 Issue Selection site, filtered to Python. I graded four: MFC#1509 was accepted but had already been fixed by merged PRs, Red-DiscordBot#6794 was rejected because four PRs were already open, and proCAT#862 was accepted as moderate and was my first choice, but another contributor asked to work on it a few hours after it was opened, just before I claimed it. MFC#1506 was accepted both times I graded it, and after this week’s scope patch its difficulty note said straightforward: the issue names the exact files and identifiers, but it’s about 80 renames, each of which has to be checked inside its own function. It fits most of my profile: it’s all Python, in an active project with regular releases, and has no front-end or build work. It doesn’t cover two of my learning goals, since there’s no bug to reproduce and no failing test to write. It does cover the third, scoping a change small enough for a maintainer to review quickly, which is why my claim asks whether they want one PR or three. I want to learn how a large project reviews a careful mechanical change, especially one whose PR template warns against low-effort submissions. My claim: https://github.com/MFlowCode/MFC/issues/1506#issuecomment-6593204160
+
+Honestly, my scout helped and fell short in about equal measure. It correctly rejected Red-DiscordBot#6794, and its re-check of the current code is how I know #1506’s renames are still undone. But on a real search, repo-in-use passed brand-new, single-person repos, so I added a rule that fails repos less than 90 days old. And unassigned only looks at open PRs, so it accepted MFC#1509 even though merged PRs had already done the work. I logged a patch for that and now check an issue’s Development sidebar myself before claiming. Its maintainer-responsive check also failed for MFC, so I’m going in knowing replies may be slow.
 
 **Toolkit**
-
-- Tool: issue-scout (your scout: your search strategy, your rubric),
-  and how you used it
-- What it produced: [the scan and its verdict on this issue, described]
-- Difficulties: [where it fell short, or "none met" if none did]
-- What changed: [what you patched or would update, or "nothing"]
+- Tool: issue-scout (my search strategy and rubric). I ran one scan, graded my Issue Selection picks, then regraded them after the unit 6 patch.
+- What it produced: a scan of 198 issues with the top 5 graded (all accepted), then grades for 4 site picks. For MFC#1506: accept both times, 3 of 4 preferred checks (maintainer-responsive failed), difficulty note "straightforward but large."
+- Difficulties: repo-in-use passed weeks-old single-person repos; unassigned missed work already done by merged PRs (MFC#1509); my tests query never reached the top 5.
+- What changed: added a 90-day repo-age rule to repo-in-use and a one-result-per-repo ranking filter; in unit 6 replaced my bounded-scope check with scope-feasible plus a difficulty note; I now check the Development sidebar before claiming.
 
 ---
 
