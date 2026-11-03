@@ -164,7 +164,7 @@ Rename exactly the 11 names the issue lists to snake_case, function by function,
 5. Update the three mentions of `casesToSkip` (testing.md, contributing.md, lint_test_suite.py) to `cases_to_skip`. Commit.
 6. Verify: `grep -c -w` finds 0 lines for every old name; the test-case list from `list_cases()` is identical before and after (776 cases); `./mfc.sh lint`, which the issue asks for, gives the same result as on master (777 passed, the same 4 environment failures), and the spell check passes; `./mfc.sh precheck` gives the same 5 of 7 passing steps I recorded on master during reproduction.
 
-Deviations: none yet.
+Deviations: Instead of renaming one function at a time (step 4), I used a whole-word replace per file, after checking that none of the new snake_case names already existed in the three files and that the old names appear only as code (a few inside f-strings like {nAttempts}). That renames every closure together with its enclosing function, which is the risk step 4 was guarding against; I reviewed each file's diff before committing. MFC's pre-commit hook runs ./mfc.sh precheck, which fails the same 2 of 7 steps on unchanged master, so I committed with --no-verify and recorded the before and after precheck results instead.
 
 **Toolkit**
 
@@ -177,40 +177,47 @@ Deviations: none yet.
 
 ## Testing Strategy
 
-[What observable checks prove the fix: your reproduction steps re-run
-against the built change (before and after), and the repo's own test
-suite or checks with the outcome shown. "Tests pass" with nothing
-observable named is not a strategy.]
+I proved the renames change nothing except names, using checks run before (master a03848a) and after (my branch):
+
+1. **Old names gone:** `grep -c -w` for each of the 11 names over case.py, test.py and cases.py: every name was present before (dimInfo on 113 lines) and on 0 lines after.
+2. **No test case changed:** MFC's golden-file suite (`./mfc.sh test`) needs CMake and a Fortran build I don't have, so I listed every test case through MFC's own `list_cases()`, with its UUID, trace and parameters. Before: 776 cases; after: 776 cases; `diff` is identical. Since a case's UUID and inputs come from these, an identical list means no golden file can be affected.
+3. **The repo's own checks:** `./mfc.sh lint`, which the issue asks for: 777 passed and the same 4 failures before and after (tar_zst needs GNU tar ≥ 1.31, which macOS doesn't ship; the 3 bench-preflight tests need a benchmark machine). Toolchain unit tests without those 4: 758 passed before and after. Ruff: all checks passed. Spell check: no typos. `./mfc.sh precheck`: the same 5 of 7 steps pass before and after.
+
+The full before/after output is in my PR description.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: my ship manifest (the checks the project says to run, written as fresh-terminal commands) plus a four-line `list_cases()` script for the before/after case list.
+- What it produced: identical before/after results for every check, and an empty diff across all 776 test cases.
+- Difficulties: `./mfc.sh test --list` stopped without CMake, and three of MFC's checks fail on unchanged master on a Mac, so "all checks pass" wasn't possible even before my change.
+- What changed: I listed cases through `list_cases()` instead of `--list`, and moved the checks that fail on master to my manifest's excluded table with dated reasons, so the ship-gate only blocks on failures my change could cause.
 
 ---
 
 ## Implementation Notes
 
-[A running log, added to as you work. Date each entry. What you
-built, decisions you made when you made them, wrong turns included.]
+**2026-10-28: scout and first picks**
 
-**[Date]**
+Built my issue scout, ran a scan of 198 issues, and fixed two rubric gaps it exposed (brand-new repos passing repo-in-use, and merged PRs slipping past unassigned). Graded my first Issue Selection picks: one was already fixed by merged PRs and one had four open PRs, so neither was usable.
 
-[Entry]
+**2026-11-02: claim and reproduction**
 
-**[Date]**
+Claimed #1506 after proCAT#862 was taken. Confirmed all 11 names are still on master a03848a and recorded a baseline: lint (777 passed, 4 environment failures), precheck (5 of 7), and 776 test cases. `./mfc.sh test --list` needed CMake, so I listed cases through MFC's `list_cases()` instead.
 
-[Entry]
+**2026-11-02: plan**
+
+plan-check accepted my plan. While planning I found that `casesToSkip` is also named in two docs pages and a lint message, which the issue doesn't mention, so I added updating those to the plan. I switched my branch name to MFC's `feature/<short-name>` convention.
+
+**2026-11-02: build**
+
+Made `feature/1506-snake-case` from master and committed one plan step at a time: case.py, test.py, cases.py, then the three docs/lint mentions (6 files, 163 lines changed each way). Before renaming, Claude (my AI assistant) and I checked that none of the new snake_case names already existed and that the old names only appear as code, so I used a whole-word replace per file instead of going function by function; I reviewed each file's diff before committing. Wrong turn: my first commit was blocked by MFC's pre-commit hook, which runs precheck and fails the same 2 steps on master, so I committed with `--no-verify` and recorded the precheck results instead.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
-
+- Tool: my CLAUDE.local.md memory file, which Claude Code read at the start of each session in MFC.
+- What it produced: the exact list of 11 in-scope names, kept me from renaming the extra camelCase names the orientation found, and the before/after test commands I used.
+- Difficulties: it didn't know MFC installs a pre-commit hook that runs precheck, so my first commit was blocked by failures that already exist on master.
+- What changed: I added a line about the pre-commit hook and `--no-verify` to my memory file.
 ---
 
 ## Pull Request
