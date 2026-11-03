@@ -164,8 +164,6 @@ Rename exactly the 11 names the issue lists to snake_case, function by function,
 5. Update the three mentions of `casesToSkip` (testing.md, contributing.md, lint_test_suite.py) to `cases_to_skip`. Commit.
 6. Verify: `grep -c -w` finds 0 lines for every old name; the test-case list from `list_cases()` is identical before and after (776 cases); `./mfc.sh lint`, which the issue asks for, gives the same result as on master (777 passed, the same 4 environment failures), and the spell check passes; `./mfc.sh precheck` gives the same 5 of 7 passing steps I recorded on master during reproduction.
 
-**Proposed Solution**
-
 Deviations: none yet.
 
 **Toolkit**
