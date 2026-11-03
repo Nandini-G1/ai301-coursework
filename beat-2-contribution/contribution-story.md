@@ -65,10 +65,9 @@ I merged my three voice-guide copies into one (the repro-check copy was missing 
 
 I wrote a manifest with three checks MFC asks for (toolchain unit tests, ruff and spell check), as fresh-terminal commands using MFC's build/venv. What fought me was that MFC's own checks don't all pass on unchanged master on my Mac: `./mfc.sh lint` has 4 environment failures and precheck fails 2 of 7 steps, so I moved those to the excluded table with dated reasons and deselected the 4 tests by name, so the gate only blocks on failures my change could cause. On my branch the gate passed all three checks and my pr-precheck accepted the PR; its one note was that it couldn't load the issue thread to confirm my one-PR-or-three question, so I checked my claim comment before opening the PR.
 
-**Unit 8: [one line on the tool work]**
+**Unit 8: Wrote my playbook and ran the PR-monitor on my open PR; it drafted a wait, not a message**
 
-[2-4 sentences: the PR-monitor and your playbook. What it read, what it
-drafted, what you did with the draft.]
+I wrote a playbook with a 14-day first-response threshold (from my scout's finding that MFC hadn't answered recent outside issues for 11-16 days), a one-nudge rule, and a rule that bot reviews aren't maintainer feedback. The monitor read PR #2131 under an hour after I opened it: one comment, which was github-actions' automated Claude Code Review finding no issues, and 1 failing check of 61. It drafted "no reply to post" and held the nudge until November 17. Its shortcoming was that it couldn't see which check failed, so I opened the log myself: the link checker couldn't reach one external page (openmp.llvm.org) out of about 126,000 links, on a docs page my PR doesn't touch. I didn't post anything, which is what my threshold said to do.
 
 ---
 
@@ -215,6 +214,10 @@ Made `feature/1506-snake-case` from master and committed one plan step at a time
 
 Ran my after-checks: every old name gone, 776 identical test cases, and the same lint and precheck results as master. The ship-gate passed on its first run, and I opened https://github.com/MFlowCode/MFC/pull/2131 through Claude Code.
 
+**2026-11-03: after opening**
+
+The bot review found no issues. One check, Build & Verify, failed; I read its log, and it was a single external link the link checker couldn't reach, on a page I didn't change. I wrote my PR-monitor playbook and ran the monitor, which drafted a wait note instead of a reply, so I posted nothing.
+
 **Toolkit**
 
 - Tool: my CLAUDE.local.md memory file, which Claude Code read at the start of each session in MFC.
@@ -231,7 +234,7 @@ Ran my after-checks: every old name gone, 776 identical test cases, and the same
 
 **Maintainer Feedback:**
 
-- 2026-11-03: none yet.
+- 2026-11-03: no maintainer feedback yet. An automated review (github-actions' Claude Code Review) found no issues. One CI check failed: the link checker couldn't reach https://openmp.llvm.org/design/Runtimes.html from gpuParallelization.html, a page this PR doesn't touch, so I didn't change anything or comment.
 
 **Status:** Awaiting review
 
@@ -248,25 +251,26 @@ Ran my after-checks: every old name gone, 776 identical test cases, and the same
 
 **Technical Skills Gained**
 
-[What you learned technically, named concretely.]
+How to make a safe rename in a large codebase: checking that new names don't collide, that nothing passes the old names by keyword, and that closures get renamed with their enclosing function, then proving nothing changed by diffing every test case's UUID, trace and parameters before and after. I also learned to read a project's CI logs to tell whether a failure is mine, and to separate checks that fail because of my environment (GNU tar, CMake, a benchmark machine) from checks my change could break.
 
 **Challenges Overcome**
 
-[What was hard and how you solved it; point at the real events, the
-Toolkit blocks above are full of them.]
+My first real issue choice was claimed by someone else hours after it was posted, and two earlier picks turned out to be already fixed or taken, so I learned to check an issue's linked PRs and comments before claiming. I couldn't run MFC's full test suite without CMake and a Fortran build, so I listed test cases through MFC's own Python code instead. MFC's pre-commit hook blocked my commits on failures that already exist on master, so I recorded precheck before and after rather than letting it look like my change caused them.
 
 **What I'd Do Differently Next Time**
 
-[Reflection on your process.]
+Start earlier. I started most the work late, which left less room to pick an issue that also covered my goals of reproducing a bug and writing a failing test. Next time I'd also run the repo's own checks on unchanged master before planning anything, so I know my environment's baseline from the start.
 
 ---
 
 ## Resources Used
 
-[What actually helped, not a reading list. List things this story
-already shows you using: the doc you followed to set the environment
-up, the thread that explained the bug, the person who answered you.
-One real entry beats ten plausible ones.]
+- MFC's contributing guide (docs/documentation/contributing.md) for the `feature/<short-name>` branch convention and the PR workflow.
+- MFC's AGENTS.md, which said to run `./mfc.sh precheck` before pushing.
+- The issue itself, https://github.com/MFlowCode/MFC/issues/1506, which listed every name to rename.
+- MFC's toolchain lint script (toolchain/bootstrap/lint.sh), which showed me what `./mfc.sh lint` actually runs, so I could write the checks for my ship manifest.
+- The CI log for the failed Build & Verify run on my PR, which showed the failure was an external link, not my change.
+- Claude (AI assistant), which helped me plan, check the renames, and draft the test-case listing script; I ran and checked everything myself.
 
 - [Link to documentation that helped]
 - [Discussion, issue, or post that helped]
