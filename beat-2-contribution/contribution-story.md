@@ -180,10 +180,10 @@ why. A recorded deviation is honest work; silent drift is not.]
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: plan-check, grading plan.md and a draft plan comment (not posted) against the issue thread.
+- What it produced: accept, with all five required checks and the preferred honest-unknowns check passing; it re-checked my facts against the code (ruff's rule sets, the 170 calls, the three casesToSkip mentions).
+- Difficulties: my branch name didn't follow MFC's `feature/<short-name>` convention; my test step named my private manifest instead of `./mfc.sh lint`, which the maintainer asked for; "same 5 of 7" wasn't backed by anything plan-check could see; and my comment read "one combined issue" as "one PR". Its own procedure assumes eval-mode inputs and has no step for a refactor with no bug to reproduce.
+- What changed: I renamed the branch to `feature/1506-snake-case`, named `./mfc.sh lint` and said where the precheck baseline comes from, and softened the one-PR line to say I'll split it if a maintainer asks.
 
 ---
 
