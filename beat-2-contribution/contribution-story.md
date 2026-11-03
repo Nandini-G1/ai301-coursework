@@ -118,31 +118,30 @@ Honestly, my scout helped and fell short in about equal measure. It correctly re
 
 **Environment Setup**
 
-[What a stranger would need to stand this up: your operating system,
-the relevant versions (language, runtime, package manager, the project
-itself), and how you set the project up. Then the challenges you faced
-and how you solved them, or that none came up.]
+macOS 26.5.2 on Apple Silicon, Python 3.14.7. I forked MFlowCode/MFC with `gh repo fork --clone`, synced my fork's master to upstream (a03848a, 2026-10-31), and ran `./mfc.sh lint`, which set up MFC's own Python environment (build/venv; MFC supports Python 3.9–3.14). No Fortran build is needed, because the issue only touches the Python toolchain.
+
+Challenges: `./mfc.sh test --list` stopped because it needs CMake, which isn't installed (MFC can't fetch it for macOS arm64). Instead of installing it, I listed every test case by calling MFC's own `list_cases()` with a four-line script, which also prints each case's parameters. Unchanged master also doesn't pass every check on my laptop: `./mfc.sh lint` has 4 failing tests (test_archive.py::test_format_tar_zst and three in test_bench_preflight.py), and `./mfc.sh precheck` fails 2 of 7 steps (toolchain lint, because of those same tests, and example case validation). None of these touch the files in the issue, so I'm treating them as my environment's baseline: after the renames, the same failures should appear and nothing new.
 
 **Steps to Reproduce**
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+1. Clone MFC and check out a03848a (current master).
+2. For each name the issue lists, count the lines containing it: `grep -c -w <name> toolchain/mfc/test/case.py toolchain/mfc/test/test.py toolchain/mfc/test/cases.py`
+3. Run `./mfc.sh lint` and `./mfc.sh precheck` for a baseline.
+4. List every test case with its UUID, trace and parameters: `build/venv/bin/python dump_cases.py > cases-before.txt`, where dump_cases.py imports `list_cases` from `toolchain/mfc/test/cases.py` and prints `get_uuid()`, `trace` and the sorted `mods` for each case.
+5. Observed result: all 11 listed names are still on master; lint is 777 passed, 21 skipped, 4 failed; precheck is 5/7; 776 test cases are listed.
 
 **Reproduction Evidence**
 
-- **Commit showing reproduction:** [link to commit in your fork]
-- **Screenshots/logs:** [if applicable]
-- **My findings:** [what you discovered during reproduction; an
-  honest, evidenced cannot-reproduce that led you to re-pick or ask
-  the maintainer belongs here and costs you nothing]
+- **Commit showing reproduction:** none (no code changed yet)
+- **Screenshots/logs:** lines containing each name on a03848a: newTrace 4, newMods 2 (case.py); bFoundFrom 3, bFoundTo 3, nAttempts 8 (test.py); dimInfo 113, dimCmp 4, dimParams 13, patchID 20, casesToSkip 2, caseSize 3 (cases.py). Example: case.py:453 `def define_case_d(stack: CaseGeneratorStack, newTrace: str, newMods: dict, ...)`; test.py:239 `bFoundFrom, bFoundTo = (False, False)`; test.py:915 `nAttempts = 0`.
+- **My findings:** The issue is real today: every name it lists is still on master. Its line numbers come from an older commit (40dde5e), so I go by names, not line numbers (define_case_d is now at line 453, not 442). My scoped orientation also found camelCase names the issue doesn't list (the n* module globals in test.py; couplingMethod, dragModel and fdOrder in cases.py); I'm leaving those out to keep the PR to what the maintainer asked for. No unit test covers case.py or cases.py directly, which is why I saved the full case list as a before/after check.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: repro-check with the wild scope, grading my claim and repro report together.
+- What it produced: accept, with all 7 required checks and the preferred tested-on-current check passing.
+- Difficulties: it called my claim's grade "after the fact," though I had checked the first version before posting and the final edit went through the voice guard; it also said the report was "ready to go" as a comment, but the course says not to post it. Its useful catch: `grep -c` counts lines, not uses, so "dimInfo 113" could be read as a total.
+- What changed: I reworded the counts as "lines containing," ran `./mfc.sh precheck` as well as lint so my report matches what my claim promised, and kept the report off the issue thread.
 
 ---
 
