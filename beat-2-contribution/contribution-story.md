@@ -10,7 +10,7 @@ files and no evidence uploads are part of Assignment 5.
 **Student:** Vishwanandini Reddy Gajjala
 **GitHub Username:** Nandini-G1
 **Issue:** https://github.com/MFlowCode/MFC/issues/1506
-**Pull Request:** [GitHub PR link, once opened]
+**Pull Request:** https://github.com/MFlowCode/MFC/pull/2131
 
 One repository, built across units 5 to 8, telling the whole story of your real
 contribution. Fill it as you work, not at the end — the sections below ask for evidence that
@@ -61,10 +61,9 @@ I turned my unit-1 issue-select skill into a scout with two gh search issues que
 
 I merged my three voice-guide copies into one (the repro-check copy was missing my unit-3 plan rule), added Upstream rules for claims, questions, and pings, and installed the voice guard; the wiring test was blocked, as it should be. Before installing, I noticed my guide contradicted itself: an old rule said "no dates," but my new claim rule asks for a report-back window, so I reworded the old rule to forbid only fix dates. My claim draft passed repro-check, but the voice check said my question only repeated the issue instead of saying what I had checked, so I confirmed the names were still on master and added that before the guard let the post through. For my CLAUDE.local.md, the scoped orientation turned up more camelCase names than the issue lists, so I read the full issue and wrote down exactly which names are in scope, and I recorded `./mfc.sh test --list` as a way to prove no test case changes without building any Fortran.
 
-**Unit 7: [one line on the tool work]**
+**Unit 7: Wrote a ship manifest for MFC and got a ship-gate PASS on my real branch**
 
-[2-4 sentences: the ship-gate and your gate manifest. What it produced
-on your real branch, what fought you, what changed because of it.]
+I wrote a manifest with three checks MFC asks for (toolchain unit tests, ruff and spell check), as fresh-terminal commands using MFC's build/venv. What fought me was that MFC's own checks don't all pass on unchanged master on my Mac: `./mfc.sh lint` has 4 environment failures and precheck fails 2 of 7 steps, so I moved those to the excluded table with dated reasons and deselected the 4 tests by name, so the gate only blocks on failures my change could cause. On my branch the gate passed all three checks and my pr-precheck accepted the PR; its one note was that it couldn't load the issue thread to confirm my one-PR-or-three question, so I checked my claim comment before opening the PR.
 
 **Unit 8: [one line on the tool work]**
 
@@ -212,6 +211,10 @@ plan-check accepted my plan. While planning I found that `casesToSkip` is also n
 
 Made `feature/1506-snake-case` from master and committed one plan step at a time: case.py, test.py, cases.py, then the three docs/lint mentions (6 files, 163 lines changed each way). Before renaming, Claude (my AI assistant) and I checked that none of the new snake_case names already existed and that the old names only appear as code, so I used a whole-word replace per file instead of going function by function; I reviewed each file's diff before committing. Wrong turn: my first commit was blocked by MFC's pre-commit hook, which runs precheck and fails the same 2 steps on master, so I committed with `--no-verify` and recorded the precheck results instead.
 
+**2026-11-03: PR**
+
+Ran my after-checks: every old name gone, 776 identical test cases, and the same lint and precheck results as master. The ship-gate passed on its first run, and I opened https://github.com/MFlowCode/MFC/pull/2131 through Claude Code.
+
 **Toolkit**
 
 - Tool: my CLAUDE.local.md memory file, which Claude Code read at the start of each session in MFC.
@@ -220,29 +223,24 @@ Made `feature/1506-snake-case` from master and committed one plan step at a time
 - What changed: I added a line about the pre-commit hook and `--no-verify` to my memory file.
 ---
 
-## Pull Request
+## Pull Request 
 
-**PR Link:** [GitHub PR URL when opened]
+**PR Link:** https://github.com/MFlowCode/MFC/pull/2131
 
-**PR Description:** [what the PR says; much of the content above
-adapts into it]
+**PR Description:** Fixes #1506. Renames the 11 camelCase and Hungarian locals and parameters the issue lists to snake_case in case.py, test.py and cases.py, and updates the three places that mention `casesToSkip` by name (two docs pages and a lint message). It explains why the rename is safe (all locals or positional parameters, no new name collides, closures renamed with their enclosing functions), what's deliberately left out (unlisted camelCase names, ruff's N rules), and offers to split it into one PR per file. It includes a before/after table: 0 old names left, 776 identical test cases, and the same lint and precheck results as master, with the environment failures that also happen on master named. It ends with a section on how AI helped.
 
 **Maintainer Feedback:**
 
-- [Date]: [feedback received, or "none yet"; silence is a normal
-  state and costs you nothing]
-- [Date]: [how you addressed it]
+- 2026-11-03: none yet.
 
-**Status:** [Awaiting review / Iterating / Merged / Closed. The
-status is a fact you record, never a grade: the PR is graded as
-opened.]
+**Status:** Awaiting review
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: the ship-gate, running my manifest's three checks and then my pr-precheck before `gh pr create`.
+- What it produced: PASS on the first run. The three checks passed, and pr-precheck accepted the branch on every required check; thread-engaged was unclear because the issue thread failed to load (HTTP 502).
+- Difficulties: because it couldn't see the thread, it flagged my sentence saying I'd asked about one PR per file as unbacked.
+- What changed: I confirmed my claim comment contains that question before opening the PR, so I kept the sentence.
 
 ---
 
