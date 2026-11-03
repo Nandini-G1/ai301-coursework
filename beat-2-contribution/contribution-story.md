@@ -166,17 +166,7 @@ Rename exactly the 11 names the issue lists to snake_case, function by function,
 
 **Proposed Solution**
 
-[High-level description of your fix approach, and what you are
-deliberately NOT changing.]
-
-**Implementation Plan**
-
-1. [Modify file X to do Y]
-2. [Add or change Z]
-3. [Update tests]
-
-[Record deviations here as they happen: what changed mid-build and
-why. A recorded deviation is honest work; silent drift is not.]
+Deviations: none yet.
 
 **Toolkit**
 
