@@ -57,11 +57,9 @@ one in the week it belongs to.
 
 I turned my unit-1 issue-select skill into a scout with two gh search issues queries from my fit profile (Python issues labeled good first issue plus bug or tests) and six ranking rules. Running my bug query by hand first showed a few repos had bulk-filed many issues at once, which would have filled the whole top 5, so I added a one-result-per-repo rule before my first scan. The scan accepted all 5 picks, but repo-in-use passed brand-new single-person repos (one was created a week before), so I added a rule that fails repos less than 90 days old. Grading my site picks showed a second gap: unassigned only checks open PRs, so it accepted MFC#1509 even though merged PRs had already fixed both parts; I logged a patch for that check, and I now open an issue’s Development sidebar before claiming anything.
 
-**Unit 6: [one line on the tool work]**
+**Unit 6: Installed the voice guard on one merged voice guide and wrote a scoped memory file for MFC**
 
-[2-4 sentences: the voice-guard, the repo-memory file. What broke or
-fell short, and what changed because of it. "Nothing broke" counts when
-it is true - say how you know.]
+I merged my three voice-guide copies into one (the repro-check copy was missing my unit-3 plan rule), added Upstream rules for claims, questions, and pings, and installed the voice guard; the wiring test was blocked, as it should be. Before installing, I noticed my guide contradicted itself: an old rule said "no dates," but my new claim rule asks for a report-back window, so I reworded the old rule to forbid only fix dates. My claim draft passed repro-check, but the voice check said my question only repeated the issue instead of saying what I had checked, so I confirmed the names were still on master and added that before the guard let the post through. For my CLAUDE.local.md, the scoped orientation turned up more camelCase names than the issue lists, so I read the full issue and wrote down exactly which names are in scope, and I recorded `./mfc.sh test --list` as a way to prove no test case changes without building any Fortran.
 
 **Unit 7: [one line on the tool work]**
 
