@@ -149,8 +149,6 @@ Challenges: `./mfc.sh test --list` stopped because it needs CMake, which isn't i
 
 **Analysis**
 
-**Analysis**
-
 The names the issue lists predate the toolchain's snake_case convention, and they survived because MFC's `.ruff.toml` selects only the E, F, W, I and PL rule sets. It doesn't enable N (pep8-naming), so nothing flags camelCase or Hungarian local names. All 11 names are local variables or function parameters: `newTrace` and `newMods` are parameters of `define_case_d` in `toolchain/mfc/test/case.py`, and all 170 calls in `cases.py` pass them by position; `bFoundFrom`/`bFoundTo` are locals in `__filter()` and `nAttempts` is a local in `handle_case()` in `test.py`; `dimInfo`, `dimCmp`, `dimParams` and `patchID` are parameters and locals in `get_bc_mods`, `get_dimensions`, `foreach_dimension` and the `alter_*` helpers in `cases.py`, and `casesToSkip` and `caseSize` are locals there too. None is used as a keyword argument or a global, and none appears elsewhere in the toolchain code. Two risks: several `alter_*` helpers are nested closures that read the enclosing function's `dimInfo`, so each rename has to cover the enclosing function and every closure inside it together; and `casesToSkip` is named outside the code, in `docs/documentation/testing.md`, `docs/documentation/contributing.md` and a message in `toolchain/mfc/lint_test_suite.py`.
 
 **Proposed Solution**
