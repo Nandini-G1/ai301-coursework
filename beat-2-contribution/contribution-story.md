@@ -91,26 +91,26 @@ Honestly, my scout helped and fell short in about equal measure. It correctly re
 
 **Problem Description**
 
-[In your own words, what is broken or missing?]
+MFC's Python toolchain uses snake_case, but its test runner in `toolchain/mfc/test/` still has camelCase and Hungarian-notation local variables and parameters, like `newTrace`, `bFoundFrom`, `nAttempts` and `dimInfo`. Nothing breaks at runtime; it's a consistency and readability problem that the linter never flags.
 
 **Expected Behavior**
 
-[What should happen?]
+The 11 names the issue lists use snake_case (`new_trace`, `found_from`, `n_attempts`, `dim_info` and so on), and nothing else changes: the same test cases with the same UUIDs and parameters, and the same tests passing.
 
 **Current Behavior**
 
-[What actually happens?]
+All 11 names are still on master (a03848a): for example, `def define_case_d(stack, newTrace, newMods, ...)` in case.py and `nAttempts = 0` in test.py. `dimInfo` alone is on 113 lines of cases.py.
 
 **Affected Components**
 
-[Which parts of the codebase are involved?]
+`toolchain/mfc/test/case.py` (`define_case_d`), `toolchain/mfc/test/test.py` (`__filter`, `handle_case`) and `toolchain/mfc/test/cases.py` (`get_bc_mods`, `get_dimensions`, `foreach_dimension`, the `alter_*` helpers, the example skip list and the case-size check). Also three places that mention `casesToSkip` by name: `docs/documentation/testing.md`, `docs/documentation/contributing.md` and a message in `toolchain/mfc/lint_test_suite.py`.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: my CLAUDE.local.md memory file, built from one scoped orientation run over `toolchain/mfc/test/`, plus a whole-repo search for each name.
+- What it produced: the three files, how they connect (cases.py builds every case through case.py's `define_case_d`; test.py filters and runs them), and which tests cover them (none cover case.py or cases.py directly).
+- Difficulties: the orientation listed more camelCase names than the issue does, and the issue's line numbers were from an older commit. The orientation also missed that `casesToSkip` is named in two docs pages and a lint message; I only found that by searching the whole repo for each name.
+- What changed: I wrote the issue's exact list of names into my memory file as the scope, and added the three `casesToSkip` mentions to my plan.
 
 ---
 
@@ -149,8 +149,22 @@ Challenges: `./mfc.sh test --list` stopped because it needs CMake, which isn't i
 
 **Analysis**
 
-[Your analysis of the root cause: what is causing the issue, traced
-to the files and functions involved.]
+**Analysis**
+
+The names the issue lists predate the toolchain's snake_case convention, and they survived because MFC's `.ruff.toml` selects only the E, F, W, I and PL rule sets. It doesn't enable N (pep8-naming), so nothing flags camelCase or Hungarian local names. All 11 names are local variables or function parameters: `newTrace` and `newMods` are parameters of `define_case_d` in `toolchain/mfc/test/case.py`, and all 170 calls in `cases.py` pass them by position; `bFoundFrom`/`bFoundTo` are locals in `__filter()` and `nAttempts` is a local in `handle_case()` in `test.py`; `dimInfo`, `dimCmp`, `dimParams` and `patchID` are parameters and locals in `get_bc_mods`, `get_dimensions`, `foreach_dimension` and the `alter_*` helpers in `cases.py`, and `casesToSkip` and `caseSize` are locals there too. None is used as a keyword argument or a global, and none appears elsewhere in the toolchain code. Two risks: several `alter_*` helpers are nested closures that read the enclosing function's `dimInfo`, so each rename has to cover the enclosing function and every closure inside it together; and `casesToSkip` is named outside the code, in `docs/documentation/testing.md`, `docs/documentation/contributing.md` and a message in `toolchain/mfc/lint_test_suite.py`.
+
+**Proposed Solution**
+
+Rename exactly the 11 names the issue lists to snake_case, function by function, and update the three mentions of `casesToSkip` so the docs and the lint message still point to a real name. Nothing should change in behavior: the same 776 test cases, with the same UUIDs and parameters, and the same tests passing. I'm deliberately not changing: camelCase names the issue doesn't list (the n* module globals in test.py; couplingMethod, dragModel and fdOrder in cases.py), MFC's ruff configuration (enabling N rules would be a separate decision for the maintainers), or formatting on lines I don't touch. I'll open one combined PR, since the issue says "File as one combined issue", unless a maintainer answers my question on the thread differently.
+
+**Implementation Plan**
+
+1. Create a branch, `feature/1506-snake-case`, on my fork (Nandini-G1/MFC) from master a03848a, following contributing.md's `feature/<short-name>` convention; the PR goes from my fork to `MFlowCode/MFC:master`.
+2. case.py: rename `newTrace` → `new_trace` and `newMods` → `new_mods` in `define_case_d`. Commit.
+3. test.py: rename `bFoundFrom`/`bFoundTo` → `found_from`/`found_to` in `__filter()`, and `nAttempts` → `n_attempts` in `handle_case()`. Commit.
+4. cases.py: rename `dimInfo` → `dim_info`, `dimCmp` → `dim_cmp`, `dimParams` → `dim_params` and `patchID` → `patch_id` one function at a time, renaming each enclosing function together with its closures; then `casesToSkip` → `cases_to_skip` and `caseSize` → `case_size`. Commit.
+5. Update the three mentions of `casesToSkip` (testing.md, contributing.md, lint_test_suite.py) to `cases_to_skip`. Commit.
+6. Verify: `grep -c -w` finds 0 lines for every old name; the test-case list from `list_cases()` is identical before and after (776 cases); `./mfc.sh lint`, which the issue asks for, gives the same result as on master (777 passed, the same 4 environment failures), and the spell check passes; `./mfc.sh precheck` gives the same 5 of 7 passing steps I recorded on master during reproduction.
 
 **Proposed Solution**
 
