@@ -226,7 +226,7 @@ The bot review found no issues. One check, Build & Verify, failed; I read its lo
 - What changed: I added a line about the pre-commit hook and `--no-verify` to my memory file.
 ---
 
-## Pull Request 
+## Pull Request
 
 **PR Link:** https://github.com/MFlowCode/MFC/pull/2131
 
