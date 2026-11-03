@@ -1,5 +1,4 @@
-# Contribution: rename camelCase/Hungarian leftovers in test toolchain
-
+# Contribution: snake_case sweep: rename camelCase/Hungarian leftovers in test toolchain
 Path: `beat-2-contribution/contribution-story.md`
 
 This file is Assignment 5, and it is graded at the path above; a copy kept anywhere else in
