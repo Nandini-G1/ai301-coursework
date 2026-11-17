@@ -12,10 +12,6 @@ My scout runs two `gh search issues` queries from my fit profile (Python issues 
 
 > The latest release is dated within 24 months of the capture date. If the repo lists no release at all, pass instead when at least 3 of the last 5 default-branch commits fall within 90 days of the capture date.
 
-A one-person repo made last week has plenty of recent commits, so it passes. I added a line so it also fails any repo created less than 90 days before the scan:
-
-> …and fail any repo created less than 90 days before the capture date, whatever its commits or releases.
-
 When I graded my picks from the course's issue site, I found a second problem. `unassigned` only checks for open PRs, so it accepted MFC#1509 even though merged PRs had already fixed it. I logged a patch for that, and now I look at an issue's Development sidebar myself before I claim it. My first choice, proCAT#862, got claimed by someone else a few hours after it was posted. MFC#1506 was accepted both times I graded it, so I claimed it on November 2.
 
 ### Reproducing and planning
