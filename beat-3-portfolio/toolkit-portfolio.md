@@ -10,9 +10,6 @@ unit 9 is when you write it.
 opened, so every piece of evidence you want seen has to live inline here: an output excerpt,
 a before/after pair, a dated commit reference.
 
-**Write every sentence yourself.** AI may gather diffs, dates and excerpts for you; it does
-not draft entries.
-
 **Keep every section header below under its exact name** — Featured Tools, Inventory, The
 Arc, and Limitations and What's Next. Feature three or four tools, each in the entry shape
 shown below; give every other tool one inventory line.
