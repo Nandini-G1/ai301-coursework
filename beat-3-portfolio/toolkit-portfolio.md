@@ -27,7 +27,7 @@ as a deleted answer.
 the unused `[Tool name]` entry stub, its copy-me sentence, and the prompt sentences under
 each header. A leftover bracketed prompt reads as unfilled.
 
-**Student:** [Student name]
+**Student:** Vishwanandini Gajjala
 
 ## Featured Tools
 
@@ -43,9 +43,7 @@ Each tool's honest limit is not written here. It goes in the tool-limits list at
 bottom of this page, one line per featured tool, so that the limits sit together and can be
 read as a set.
 
-[Why these tools, in your own words.]
-
-Copy the entry shape below once per featured tool and fill it there.
+I chose these three tools because they show how my toolkit developed from simple evaluation rubrics into a more complete workflow for contributing to open-source projects. Each tool addresses a different stage of the process: finding worthwhile issues, checking whether problems can be reproduced, planning implementations, and verifying changes before submitting a pull request. I chose them because they demonstrate the most meaningful changes I made throughout the semester, including revisions based on failed evaluations and problems I encountered during my actual MFC contribution. Together, they show how I moved from simply relying on AI-generated suggestions to building tools with my own criteria, rules, and evidence requirements.
 
 **Issue-scout**
 
